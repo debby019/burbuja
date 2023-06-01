@@ -8,6 +8,6 @@ Depues se puede ingresar la funcion que se desee realizar, eliminar, agregar, im
 
 Como abrir:
 colocar en terminal:
->>>git clone https://github.com/debby019/burbuja.git
->>>cd objetos
->>>main.py
+git clone https://github.com/debby019/burbuja.git
+cd objetos
+main.py
