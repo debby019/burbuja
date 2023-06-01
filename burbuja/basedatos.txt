@@ -1,3 +1,4 @@
 Galleta,20.0,10,3
 Pastel,50.0,30,5
-frambuesa,10,1,1
+malteada,89,7,10
+chocolate,14,4,5

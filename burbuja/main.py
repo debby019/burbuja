@@ -1,9 +1,11 @@
-'''El siguiente programa guarda los objetos, de un archivo de texto, en un arreglo'''
-from buscar import *
-from burbuja import *
+'''Este programa lee los productos de un archivo de texto y realiza diferentes funciones'''
+from buscar import localizar, buscar_producto
+from burbuja import verificador_precio
 from burbujapeso import verificador_peso
-from bubuja_piezas import verificador_cantidad
-from eliminar import*
+from burbuja_piezas import verificador_cantidad
+from eliminar import eliminar
+
+
 class Productos:
     '''productos'''
     def __init__(self, nombre, precio=1, peso=1, cantidad=0):
@@ -15,100 +17,92 @@ class Productos:
 
     def __str__(self):
         '''hace que el arreglo de productos sea legible'''
-        return f"Nombre: {self.nombre}, Precio: {self.precio}, Peso: {self.peso}, Piezas: {self.cantidad}"
+        return (
+            f"Nombre: {self.nombre},"
+            f"Precio: {self.precio},"
+            f"Peso: {self.peso},"
+            f"Piezas: {self.cantidad}"
+        )
 
-    def buscar():
+    def buscar(self):
         '''busca el producto por su nombre'''
         producto_a_buscar = input("Ingrese el nombre del producto: ").lower()
-        ubicacion = localizar(lista,producto_a_buscar)
+        ubicacion = localizar(lista, producto_a_buscar)
         producto_encontrado = buscar_producto(lista, producto_a_buscar)
         if producto_encontrado:
-            print("producto: \n ",producto_encontrado,"\nposicion del producto: ", ubicacion )
-        elif commando:
+            print("producto: \n ", producto_encontrado, "\nposicion del producto: ", ubicacion)
+        else:
             print("Producto no encontrado.")
 
-    def ordenar():
+    def ordenar(self):
         '''ordena el los productos de menor a mayor precio'''
-        opc_ordenar = input("desea ordenar por peso, precio o piezas ?: ").lower()
-        if opc_ordenar == "precio":
-            verifica = verificador_precio(lista)
-            if verifica:
-                for producto in lista:
-                    print("Numeros ordenados: ",producto)
+        dato = input("¿Desea ordenar por precio, peso o piezas?: ").lower()
+        opciones_ordenar = {
+            "precio": verificador_precio,
+            "peso": verificador_peso,
+            "piezas": verificador_cantidad
+        }
+        if dato in opciones_ordenar:
+            verificador = opciones_ordenar[dato]
+            if verificador(lista):
+                for objetos in lista:
+                    print("Productos ordenados: ", objetos)
             else:
-                print(" los numeros ya estan ordenados ")
-
-                input("precione enter para continuar...")
-
-        elif opc_ordenar == "peso":
-            verifica = verificador_peso(lista)
-            if verifica:
-                for producto in lista:
-                    print("Numeros ordenados: ",producto)
-            else:
-                print(" los numeros ya estan ordenados ")
-
-                input("precione enter para continuar...")
-        elif opc_ordenar == "piezas":
-            verifica = verificador_cantidad(lista)
-            if verifica:
-                for producto in lista:
-                    print("Numeros ordenados: ",producto)
-            else:
-                print(" los numeros ya estan ordenados ")
-
-                input("precione enter para continuar...")
-
+                print("Los productos ya están ordenados.")
+            input("Presione Enter para continuar...")
         else:
-            print("ingrese opcion correcta")
+            print("Ingrese una opción válida.")
 
-    def agregar_producto():
+    def agregar_producto(self):
         '''agrega un producto al archivo de texto'''
         nombre = input("Ingrese el nombre del producto: ").lower()
-        verificar = buscar_producto(lista,nombre)
+        verificar = buscar_producto(lista, nombre)
         if verificar:
-            print("el producto ya se encuentra en el almacen: ")
+            print("El producto ya se encuentra en el almacén: ")
         else:
             precio = input("Ingrese el precio del producto: ")
             peso = input("Ingrese el peso del producto: ")
-            cantidad = input("piezas: ")
+            cantidad = input("Ingrese la cantidad(gramos): ")
             nuevo_producto = Productos(nombre, precio, peso, cantidad)
             lista.append(nuevo_producto)
 
-            with open('basedatos.txt', 'a') as text:
-                text.write(f"{nombre},{precio},{peso},{cantidad}\n")
+            with open('basedatos.txt', 'a', encoding='utf-8') as texto:
+                texto.write(f"{nombre},{precio},{peso},{cantidad}\n")
 
             print("Producto agregado correctamente:", nuevo_producto)
 
-    def eliminar_producto():
+    def eliminar_producto(self):
         '''elimina el producto ingresando su nombre'''
         producto_a_eliminar = input("Ingrese el nombre del producto a eliminar: ").lower()
-        producto_a_eliminar = producto_a_eliminar.lower()
-        verifica = buscar_producto(lista,producto_a_eliminar)
+        verifica = buscar_producto(lista, producto_a_eliminar)
         if verifica:
-            list = eliminar(lista,producto_a_eliminar)
-            with open('basedatos.txt', 'w') as text:
-                for producto in list:
-                    text.write(f"{producto.nombre},{producto.precio},{producto.peso},{producto.cantidad}\n")
-            print("el producto ha sido eliminado: \n")
-            for producto in list:
-                print(producto)
+            lista_productos = eliminar(lista, producto_a_eliminar)
+            with open('basedatos.txt', 'w', encoding='utf-8') as texto_e:
+                for prod in lista_productos:
+                    linea = f"{prod.nombre},{prod.precio},{prod.peso},{prod.cantidad}\n"
+                    texto_e.write(linea)
+            print("El producto ha sido eliminado: \n")
+            for prod in lista_productos:
+                print(prod)
         else:
-            print("el producto no se encuentra en la lista")
+            print("El producto no se encuentra en la lista")
 
-    def imprimir_productos():
-        for producto in lista:
-            print("Los productos son:\n",producto)
+    def imprimir_productos(self):
+        '''imprime todos los productos'''
+        print("Los productos son:\n")
+        for prod in lista:
+            print(prod)
 
-with open('basedatos.txt', 'r') as text:
-    lista = []
-    for line in text:
-        atributos = line.strip().split(',')
+lista = []
+with open('basedatos.txt', 'r', encoding='utf-8') as texto_producto:
+    for lineas in texto_producto:
+        atributos = lineas.strip().split(',')
         lista.append(Productos(*atributos))
 
-commando = ""
-while (commando != "exit"):
-    commando = input('-->').lower()
+comando = ""
+while comando != "exit":
+    print("lista de comandos: [buscar, ordenar, agregar, eliminar, productos]")
+    comando = input('-->').lower()
     opciones = {
         "buscar": Productos.buscar,
         "ordenar": Productos.ordenar,
@@ -116,9 +110,7 @@ while (commando != "exit"):
         "eliminar": Productos.eliminar_producto,
         "productos": Productos.imprimir_productos
     }
-    if commando in opciones:
-        opciones[commando]()
-    elif commando == "exit":
-        break
+    if comando in opciones:
+        opciones[comando](lista)
     else:
         print("Comando inválido")
