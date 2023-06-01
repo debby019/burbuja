@@ -113,4 +113,4 @@ while comando != "exit":
     if comando in opciones:
         opciones[comando](lista)
     else:
-        print("Comando inválido")
+        print("Comando invalido")
