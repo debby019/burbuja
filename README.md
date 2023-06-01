@@ -4,7 +4,9 @@ El programa se encuentra en la carpeta burbuja.
 El codigo principal esta en el archivo main.py
 
 El programa lee un archivo de texto con dististos productos y caracteristicas y los guarda en una lista de arreglos.
-Depues se puede ingresar la funcion que se desee realizar, eliminar, agregar, imprimir los productos, ordenar por precio, peso y piezas.
+cada producto cuenta con su respectivo nombre, precio, peso, cantidad.
+Depues se puede ingresar la funcion que se desee realizar: eliminar producto, agregar producto, imprimir los productos, ordenar por precio, peso y piezas, los metodos
+eliminar y agregar modifican el archivo de texto en donde se encuentran los productos.
 
 ## Como abrir:
 
