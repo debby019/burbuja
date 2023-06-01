@@ -36,7 +36,7 @@ class Productos:
 
     def ordenar(self):
         '''ordena el los productos de menor a mayor precio'''
-        dato = input("¿Desea ordenar por precio, peso o piezas?: ").lower()
+        dato = input("Desea ordenar por precio, peso o piezas?: ").lower()
         opciones_ordenar = {
             "precio": verificador_precio,
             "peso": verificador_peso,
@@ -48,17 +48,17 @@ class Productos:
                 for objetos in lista:
                     print("Productos ordenados: ", objetos)
             else:
-                print("Los productos ya están ordenados.")
+                print("Los productos ya estan ordenados.")
             input("Presione Enter para continuar...")
         else:
-            print("Ingrese una opción válida.")
+            print("Ingrese una opcian valida.")
 
     def agregar_producto(self):
         '''agrega un producto al archivo de texto'''
         nombre = input("Ingrese el nombre del producto: ").lower()
         verificar = buscar_producto(lista, nombre)
         if verificar:
-            print("El producto ya se encuentra en el almacén: ")
+            print("El producto ya se encuentra en el almacen: ")
         else:
             precio = input("Ingrese el precio del producto: ")
             peso = input("Ingrese el peso del producto: ")
@@ -112,5 +112,7 @@ while comando != "exit":
     }
     if comando in opciones:
         opciones[comando](lista)
+    elif comando == "exit":
+        print("bye")
     else:
         print("Comando invalido")
