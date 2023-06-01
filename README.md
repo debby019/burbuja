@@ -6,7 +6,7 @@ El codigo principal esta en el archivo main.py
 El programa lee un archivo de texto con dististos productos y caracteristicas y los guarda en una lista de arreglos.
 Depues se puede ingresar la funcion que se desee realizar, eliminar, agregar, imprimir los productos, ordenar por precio, peso y piezas.
 
-___Como abrir:___
+##___Como abrir:___
 
 colocar en terminal los siguientes comandos:
 
